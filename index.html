@@ -5,8 +5,8 @@
   <title>Relógio Digital</title>
   <style>
     body {
-      background-color: #223;
-      color: #00ffcc;
+      background-color: rgb(91, 91, 143);
+      color: #f5fffd;
       font-family: 'Courier New', Courier, monospace;
       display: flex;
       justify-content: center;
@@ -17,10 +17,10 @@
 
     .clock {
       font-size: 60px;
-      background-color: #000;
+      background-color: #c9c9c9;
       padding: 30px 60px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px #00ffcc;
+      border-radius: 16px;
+      box-shadow: 0 0 20px #264741;
     }
   </style>
 </head>
@@ -30,37 +30,36 @@
   <!-- React + ReactDOM (via CDN) -->
   <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-  <!-- Babel (para permitir JSX) -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-  <!-- Nosso componente React -->
-  <script type="text/babel">
+  <!-- Nosso componente React sem JSX -->
+  <script>
     function RelogioDigital() {
       const [horaAtual, setHoraAtual] = React.useState(new Date());
 
-      React.useEffect(() => {
-        const intervalo = setInterval(() => {
+      React.useEffect(function () {
+        const intervalo = setInterval(function () {
           setHoraAtual(new Date());
         }, 1000);
 
-        return () => clearInterval(intervalo); // limpa o intervalo ao desmontar
+        return function () {
+          clearInterval(intervalo); // Limpa o intervalo ao desmontar
+        };
       }, []);
 
-      const formatarTempo = (valor) => valor.toString().padStart(2, '0');
+      const formatarTempo = function (valor) {
+        return valor.toString().padStart(2, '0');
+      };
 
       const horas = formatarTempo(horaAtual.getHours());
       const minutos = formatarTempo(horaAtual.getMinutes());
       const segundos = formatarTempo(horaAtual.getSeconds());
 
-      return (
-        <div className="clock">
-          {horas}:{minutos}:{segundos}
-        </div>
-      );
+      return React.createElement('div', { className: 'clock' }, horas + ':' + minutos + ':' + segundos);
     }
 
+    // Criação do React Root e renderização
     const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<RelogioDigital />);
+    root.render(React.createElement(RelogioDigital));
   </script>
 </body>
 </html>
