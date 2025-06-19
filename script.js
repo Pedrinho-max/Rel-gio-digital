@@ -1,11 +1,13 @@
-function updateClock() {
-  const timeElement = document.getElementById('time');
-  const now = new Date();
-  const hours = String(now.getHours()).padStart(2, '0');
-  const minutes = String(now.getMinutes()).padStart(2, '0');
-  const seconds = String(now.getSeconds()).padStart(2, '0');
-  timeElement.textContent = `${hours}:${minutes}:${seconds}`;
+function atualizarRelogio() {
+  const agora = new Date();
+  const horas = String(agora.getHours()).padStart(2, '0');
+  const minutos = String(agora.getMinutes()).padStart(2, '0');
+  const segundos = String(agora.getSeconds()).padStart(2, '0');
+
+  const horaFormatada = `${horas}:${minutos}:${segundos}`;
+  document.getElementById('time').textContent = horaFormatada;
 }
 
-setInterval(updateClock, 1000);
-updateClock(); // Chama imediatamente para não esperar 1 segundo
+// Atualiza o relógio a cada segundo
+setInterval(atualizarRelogio, 1000);
+atualizarRelogio(); // Atualiza imediatamente ao abrir a página
