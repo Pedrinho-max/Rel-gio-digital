@@ -1,15 +1,87 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Relógio Digital</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Clima Simples</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to top, #2193b0, #6dd5ed);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      color: white;
+    }
+
+    .caixa {
+      background: rgba(0,0,0,0.4);
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      width: 300px;
+    }
+
+    input {
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      width: 80%;
+    }
+
+    button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      background: orange;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: darkorange;
+    }
+
+    .resultado {
+      margin-top: 15px;
+    }
+  </style>
 </head>
 <body>
-  <div class="clock">
-    <span id="time"></span>
+
+  <div class="caixa">
+    <h2>🌦️ Clima Tempo</h2>
+    <input type="text" id="cidade" placeholder="Digite a cidade...">
+    <br>
+    <button onclick="mostrarClima()">Ver Clima</button>
+
+    <div class="resultado" id="resultado"></div>
   </div>
-  <script src="script.js"></script>
+
+  <script>
+    function mostrarClima() {
+      const cidade = document.getElementById("cidade").value.toLowerCase();
+      let mensagem = "";
+
+      if (cidade === "são paulo") {
+        mensagem = "☀️ São Paulo está ensolarada com 28°C";
+      } else if (cidade === "rio de janeiro") {
+        mensagem = "🌴 Rio de Janeiro com calor de 32°C e céu limpo";
+      } else if (cidade === "curitiba") {
+        mensagem = "🌧️ Curitiba está chuvosa com 18°C";
+      } else if (cidade === "bh" || cidade === "belo horizonte") {
+        mensagem = "⛅ Belo Horizonte com clima agradável, 24°C";
+      } else {
+        mensagem = "❌ Cidade não encontrada no sistema simples.";
+      }
+
+      document.getElementById("resultado").innerText = mensagem;
+    }
+  </script>
+
 </body>
 </html>
+
