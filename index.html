@@ -62,26 +62,27 @@
   </div>
 
   <script>
-    function mostrarClima() {
-      const cidade = document.getElementById("cidade").value.toLowerCase();
-      let mensagem = "";
+    async function mostrarClima() {
+      const cidade = document.getElementById("cidade").value;
+      const apiKey = "SUA_API_KEY_AQUI"; // 🔑 Coloque sua chave aqui
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=${apiKey}&lang=pt_br&units=metric`;
 
-      if (cidade === "são paulo") {
-        mensagem = "☀️ São Paulo está ensolarada com 28°C";
-      } else if (cidade === "rio de janeiro") {
-        mensagem = "🌴 Rio de Janeiro com calor de 32°C e céu limpo";
-      } else if (cidade === "curitiba") {
-        mensagem = "🌧️ Curitiba está chuvosa com 18°C";
-      } else if (cidade === "bh" || cidade === "belo horizonte") {
-        mensagem = "⛅ Belo Horizonte com clima agradável, 24°C";
-      } else {
-        mensagem = "❌ Cidade não encontrada no sistema simples.";
+      try {
+        const resposta = await fetch(url);
+        if (!resposta.ok) throw new Error("Cidade não encontrada");
+
+        const dados = await resposta.json();
+        const nomeCidade = dados.name;
+        const temperatura = Math.round(dados.main.temp);
+        const descricao = dados.weather[0].description;
+
+        document.getElementById("resultado").innerText = 
+          `📍 ${nomeCidade}\n🌡️ ${temperatura}°C - ${descricao}`;
+      } catch (erro) {
+        document.getElementById("resultado").innerText = "❌ Cidade não encontrada!";
       }
-
-      document.getElementById("resultado").innerText = mensagem;
     }
   </script>
 
 </body>
 </html>
-
